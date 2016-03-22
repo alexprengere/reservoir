@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import with_statement, print_function, division
+
 import logging
 from random import random
 
@@ -17,7 +19,7 @@ def reservoir(iterator, K):
         else:
             ind = int(random() * N)
             if ind < K:
-                logging.warn('Probability %s/%s: replacing item %s with %r',
+                logging.warn('[Probability %s/%s] Replacing item at index %s with %r',
                              K, N, ind, item)
                 result[ind] = item
 
@@ -26,6 +28,9 @@ def reservoir(iterator, K):
 
 if __name__ == '__main__':
     import sys
-    sample = reservoir(sys.stdin, int(sys.argv[1]))
-    for row in sample:
-        print(row.rstrip())
+    if len(sys.argv) <= 1:
+        print('You must provide the reservoir length')
+        exit(1)
+
+    for row in reservoir(sys.stdin, K=int(sys.argv[1])):
+        print(row, end="")
