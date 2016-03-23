@@ -3,34 +3,45 @@
 
 from __future__ import with_statement, print_function, division
 
-import logging
+import sys
 from random import random
 
 
-def reservoir(iterator, K):
-    result = []
-    N = 0
+def build_reservoir(iterator, reservoir_size, verbose=False):
+    if verbose:
+        def log(s, *args):
+            print(s.format(*args), file=sys.stderr)
+    else:
+        def log(*_):
+            pass
 
-    for item in iterator:
-        N += 1
-        if len(result) < K:
-            result.append(item)
-            logging.warn('Adding %r to unfilled reservoir', item)
-        else:
-            ind = int(random() * N)
-            if ind < K:
-                logging.warn('[Probability %s/%s] Replacing item at index %s with %r',
-                             K, N, ind, item)
-                result[ind] = item
+    res = []
+    try:
+        for n, item in enumerate(iterator, start=1):
+            if len(res) < reservoir_size:
+                log('> Adding at index {0}: {1!r}', len(res), item)
+                res.append(item)
+            else:
+                ind = int(random() * n)
+                if ind < reservoir_size:
+                    log('> Swap at index {0}: {1!r} -> {2!r} (proba was {3}/{4})',
+                        ind, res[ind], item, reservoir_size, n)
+                    res[ind] = item
+    except KeyboardInterrupt:
+        log('! User interrupted the process, stopping now')
 
-    return result
+    return res
 
 
 if __name__ == '__main__':
-    import sys
-    if len(sys.argv) <= 1:
-        print('You must provide the reservoir length')
-        exit(1)
+    import argparse
+    parser = argparse.ArgumentParser()
 
-    for row in reservoir(sys.stdin, K=int(sys.argv[1])):
+    parser.add_argument('size', help="Reservoir size", type=int)
+    parser.add_argument('-v', '--verbose', action='store_true')
+    args = parser.parse_args()
+
+    for row in build_reservoir(sys.stdin,
+                               reservoir_size=args.size,
+                               verbose=args.verbose):
         print(row, end="")

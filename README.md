@@ -3,28 +3,22 @@
 A reservoir sampling implementation.
 
 ```bash
-$ cat letters.txt | ./reservoir.py 6
-WARNING:root:Adding 'A\n' to unfilled reservoir
-WARNING:root:Adding 'B\n' to unfilled reservoir
-WARNING:root:Adding 'C\n' to unfilled reservoir
-WARNING:root:Adding 'D\n' to unfilled reservoir
-WARNING:root:Adding 'E\n' to unfilled reservoir
-WARNING:root:Adding 'F\n' to unfilled reservoir
-WARNING:root:[Probability 6/7] Replacing item at index 4 with 'G\n'
-WARNING:root:[Probability 6/8] Replacing item at index 0 with 'H\n'
-WARNING:root:[Probability 6/9] Replacing item at index 2 with 'I\n'
-WARNING:root:[Probability 6/12] Replacing item at index 2 with 'L\n'
-WARNING:root:[Probability 6/13] Replacing item at index 3 with 'M\n'
-WARNING:root:[Probability 6/14] Replacing item at index 1 with 'N\n'
-WARNING:root:[Probability 6/15] Replacing item at index 4 with 'O\n'
-WARNING:root:[Probability 6/18] Replacing item at index 1 with 'R\n'
-WARNING:root:[Probability 6/20] Replacing item at index 4 with 'T\n'
-WARNING:root:[Probability 6/21] Replacing item at index 5 with 'U\n'
-WARNING:root:[Probability 6/23] Replacing item at index 1 with 'W\n'
+$ cat letters.txt | ./reservoir.py 10 -v
+> Adding at index 0: 'A\n'
+> Adding at index 1: 'B\n'
+> Adding at index 2: 'C\n'
+> Adding at index 3: 'D\n'
+> Adding at index 4: 'E\n'
+> Adding at index 5: 'F\n'
+> Swap at index 0: 'A\n' -> 'G\n' (proba was 6/7)
+> Swap at index 2: 'C\n' -> 'H\n' (proba was 6/8)
+> Swap at index 3: 'D\n' -> 'L\n' (proba was 6/12)
+> Swap at index 4: 'E\n' -> 'O\n' (proba was 6/15)
+> Swap at index 4: 'O\n' -> 'R\n' (proba was 6/18)
+G
+B
 H
-W
 L
-M
-T
-U
+R
+F
 ```
