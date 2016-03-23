@@ -25,3 +25,5 @@ K
 O
 G
 ```
+
+You can hit ctrl+C during the command execution, the signal will be caught and the sample will be printed on stdout.
