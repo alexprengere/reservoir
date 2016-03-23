@@ -19,7 +19,7 @@ def build_reservoir(iterator, reservoir_size, verbose=False):
     try:
         for n, item in enumerate(iterator, start=1):
             if len(res) < reservoir_size:
-                log('> [p=1] Adding at index {0}: {1!r}', len(res), item)
+                log('> Adding at index {0}: {1!r}', len(res), item)
                 res.append(item)
             else:
                 ind = int(random() * n)
