@@ -1,13 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Python implementation for
+http://erikerlandson.github.io/blog/2015/11/20/very-fast-reservoir-sampling/
+"""
+
 from __future__ import with_statement, print_function, division
+try:
+    range = xrange
+except NameError:
+    pass
 
 from sys import stderr, stdin
 from random import random
+from math import log as ln
 
 
-def build_reservoir(iterator, reservoir_size, verbose=False):
+def build_reservoir(data, R, verbose=False):
     if verbose:
         def log(s, *args):
             print(s.format(*args), file=stderr)
@@ -15,20 +25,36 @@ def build_reservoir(iterator, reservoir_size, verbose=False):
         def log(*_):
             pass
 
+    threshold = 4 * R
+    gap = 0
     res = []
     try:
-        for n, item in enumerate(iterator, start=1):
-            if len(res) < reservoir_size:
+        j, iterator = 0, iter(data)
+        while True:
+            j += 1
+            item = next(iterator)
+            if len(res) < R:
                 log('> Adding at index {0}: {1!r}', len(res), item)
                 res.append(item)
+
+            elif j < threshold:
+                k = int(random() * j)
+                if k < R:
+                    log('> [p={0}/{1}] Swap at index {2}: {3!r} replaces {4!r}', R, j, k, item, res[k])
+                    res[k] = item
             else:
-                ind = int(random() * n)
-                if ind < reservoir_size:
-                    log('> [p={0}/{1}] Swap at index {2}: {3!r} -> {4!r}',
-                        reservoir_size, n, ind, res[ind], item)
-                    res[ind] = item
+                gap = int(ln(random()) / ln(1 - R / j))
+                for _ in range(gap):
+                    item = next(iterator)
+                j += gap
+                k = int(random() * R)
+                log('> Swap after gap {0} at index {1}: {2!r} replaces {3!r}', gap, k, item, res[k])
+                res[k] = item
+
     except KeyboardInterrupt:
         print('\n! User interrupted the process, stopping now\n', file=stderr)
+    except StopIteration:
+        pass
 
     return res
 
@@ -42,6 +68,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     for row in build_reservoir(stdin,
-                               reservoir_size=args.size,
+                               R=args.size,
                                verbose=args.verbose):
         print(row, end="")
