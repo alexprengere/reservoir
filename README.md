@@ -1,6 +1,6 @@
 # Reservoir
 
-A reservoir sampling implementation.
+A reservoir sampling implementation based on [this blog](http://erikerlandson.github.io/blog/2015/11/20/very-fast-reservoir-sampling/), using high-fidelity approximation to the reservoir sampling-gap distribution.
 
 ```bash
 $ cat letters.txt | ./reservoir.py -v 6
@@ -10,20 +10,17 @@ $ cat letters.txt | ./reservoir.py -v 6
 > Adding at index 3: 'D\n'
 > Adding at index 4: 'E\n'
 > Adding at index 5: 'F\n'
-> [p=6/7] Swap at index 5: 'F\n' -> 'G\n'
-> [p=6/8] Swap at index 1: 'B\n' -> 'H\n'
-> [p=6/9] Swap at index 4: 'E\n' -> 'I\n'
-> [p=6/11] Swap at index 3: 'D\n' -> 'K\n'
-> [p=6/13] Swap at index 1: 'H\n' -> 'M\n'
-> [p=6/15] Swap at index 4: 'I\n' -> 'O\n'
-> [p=6/16] Swap at index 0: 'A\n' -> 'P\n'
-> [p=6/19] Swap at index 0: 'P\n' -> 'S\n'
-S
-M
-C
-K
-O
+> [p=6/7] Swap at index 3: 'G\n' replaces 'D\n'
+> [p=6/8] Swap at index 2: 'H\n' replaces 'C\n'
+> [p=6/10] Swap at index 0: 'J\n' replaces 'A\n'
+> [p=6/17] Swap at index 4: 'Q\n' replaces 'E\n'
+> After gap 1, swap at index 0: 'Y\n' replaces 'J\n'
+Y
+B
+H
 G
+Q
+F
 ```
 
 You can hit ctrl+C during the command execution, the signal will be caught and the sample will be printed on stdout.
