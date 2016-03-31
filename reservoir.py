@@ -27,7 +27,6 @@ def build_reservoir(data, R, threshold=None, verbose=False):
 
     if threshold is None:
         threshold = 4 * R
-    gap = 0
     res = []
     try:
         j, iterator = 0, iter(data)
