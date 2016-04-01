@@ -29,18 +29,19 @@ def build_reservoir(data, R, threshold=None, verbose=False):
         threshold = 4 * R
     res = []
     try:
-        j, iterator = 0, iter(data)
+        j = 0
+        iterator = iter(data)
         while True:
             j += 1
             item = next(iterator)
             if len(res) < R:
-                p('> Adding at index {0}: {1!r}', len(res), item)
+                p('> Adding element nb {0}: {1!r}', len(res), item)
                 res.append(item)
 
             elif j < threshold:
                 k = int(random() * j)
                 if k < R:
-                    p('> [p={0}/{1}] Swap at index {2}: {3!r} replaces {4!r}', R, j, k, item, res[k])
+                    p('> [p={0}/{1:>9}] Swap element nb {2:>5}: {3!r} replaces {4!r}', R, j, k, item, res[k])
                     res[k] = item
             else:
                 gap = int(log(random()) / log(1 - R / j))
@@ -48,7 +49,7 @@ def build_reservoir(data, R, threshold=None, verbose=False):
                 for _ in range(gap):
                     item = next(iterator)
                 k = int(random() * R)
-                p('> After gap {0}, swap at index {1}: {2!r} replaces {3!r}', gap, k, item, res[k])
+                p('> After skipping {0:>9} lines, swap element nb {1:>5}: {2!r} replaces {3!r}', gap, k, item, res[k])
                 res[k] = item
 
     except KeyboardInterrupt:
@@ -64,7 +65,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('size', help="Reservoir size", type=int)
-    parser.add_argument('-t', '--threshold', help="Threshold for using gaps", type=int)
+    parser.add_argument('-t', '--threshold',
+                        help="""
+                        Threshold for using gaps,
+                        default is 4 times the reservior size""",
+                        type=int)
     parser.add_argument('-v', '--verbose', action='store_true')
     args = parser.parse_args()
 
