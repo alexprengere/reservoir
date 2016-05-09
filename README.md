@@ -2,6 +2,8 @@
 
 A reservoir sampling implementation based on [this blog](http://erikerlandson.github.io/blog/2015/11/20/very-fast-reservoir-sampling/), using high-fidelity approximation to the reservoir sampling-gap distribution.
 
+You can hit ctrl+C during the command execution, the signal will be caught and the sample will be printed on stdout.
+
 ```bash
 $ cat HUGE_FILE_BILLIONS_OF_LINES.txt | ./reservoir.py 1000
 # wait, when bored, hit ctrl+C
@@ -13,6 +15,12 @@ line786
 You can get more details on what is going on under the hood:
 
 ```bash
+$ head -n 5 letters.txt
+A
+B
+C
+D
+E
 $ cat letters.txt | ./reservoir.py --verbose 6
 > Adding element nb 0: 'A\n'
 > Adding element nb 1: 'B\n'
@@ -34,8 +42,6 @@ G
 W
 Y
 ```
-
-You can hit ctrl+C during the command execution, the signal will be caught and the sample will be printed on stdout.
 
 If you want to make tests on bigger data sets, you can build arbitrarily large files using this (600Mo needed!):
 ```bash
