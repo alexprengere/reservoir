@@ -3,7 +3,17 @@
 A reservoir sampling implementation based on [this blog](http://erikerlandson.github.io/blog/2015/11/20/very-fast-reservoir-sampling/), using high-fidelity approximation to the reservoir sampling-gap distribution.
 
 ```bash
-$ cat letters.txt | ./reservoir.py -v 6
+$ cat HUGE_FILE_BILLIONS_OF_LINES.txt | ./reservoir.py 1000
+# wait, when bored, hit ctrl+C
+line154
+line786
+# and 998 other lines selected with an equal probability
+```
+
+You can get more details on what is going on under the hood:
+
+```bash
+$ cat letters.txt | ./reservoir.py --verbose 6
 > Adding element nb 0: 'A\n'
 > Adding element nb 1: 'B\n'
 > Adding element nb 2: 'C\n'
