@@ -1,15 +1,20 @@
 # Reservoir
 
-A reservoir sampling implementation based on [this blog](http://erikerlandson.github.io/blog/2015/11/20/very-fast-reservoir-sampling/), using high-fidelity approximation to the reservoir sampling-gap distribution.
+Reservoir sampling is a sampling technique used when you want a fixed-sized sample of a dataset with unknown size.
 
-You can hit ctrl+C during the command execution, the signal will be caught and the sample will be printed on stdout.
+This is a Python implementation of based on [this blog](http://erikerlandson.github.io/blog/2015/11/20/very-fast-reservoir-sampling/), using high-fidelity approximation to the reservoir sampling-gap distribution. This technique is *really* fast!
 
 ```bash
-$ cat HUGE_FILE_BILLIONS_OF_LINES.txt | ./reservoir.py 1000
-# wait, when bored, hit ctrl+C
-line154
-line786
-# and 998 other lines selected with an equal probability
+$ cat BILLIONS_OF_LINES.txt | ./reservoir.py 1000
+#
+# Creating a sample of 1000 elements
+#
+# When bored, hit ctrl+C to stop the sampling
+# The signal will be caught and the sample will be printed on stdout.
+line_154
+line_786
+...
+# And 998 other lines selected with an equal probability in BILLIONS_OF_LINES.txt
 ```
 
 You can get more details on what is going on under the hood:
