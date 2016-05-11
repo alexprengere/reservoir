@@ -66,9 +66,8 @@ if __name__ == '__main__':
 
     parser.add_argument('size', help="Reservoir size", type=int)
     parser.add_argument('-t', '--threshold',
-                        help="""
-                        Threshold for using gaps,
-                        default is 4 times the reservior size""",
+                        help=('threshold to start using gaps, default '
+                              ' is 4 times the reservoir size'),
                         type=int)
     parser.add_argument('-v', '--verbose', action='store_true')
     args = parser.parse_args()

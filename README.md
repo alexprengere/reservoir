@@ -9,12 +9,11 @@ $ cat BILLIONS_OF_LINES.txt | ./reservoir.py 1000
 #
 # Creating a sample of 1000 elements
 #
-# When bored, hit ctrl+C to stop the sampling
+# If bored, you can hit ctrl+C to stop the sampling where it was.
 # The signal will be caught and the sample will be printed on stdout.
 line_154
 line_786
-...
-# And 998 other lines selected with an equal probability in BILLIONS_OF_LINES.txt
+# ... and 998 other lines selected with an equal probability in BILLIONS_OF_LINES.txt
 ```
 
 You can get more details on what is going on under the hood:
@@ -26,7 +25,7 @@ B
 C
 D
 E
-$ cat letters.txt | ./reservoir.py --verbose 6
+$ cat letters.txt | ./reservoir.py 6 --verbose
 > Adding element nb 0: 'A\n'
 > Adding element nb 1: 'B\n'
 > Adding element nb 2: 'C\n'
