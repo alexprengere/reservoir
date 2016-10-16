@@ -1,4 +1,4 @@
-# Reservoir
+# Reservoir sampling
 
 Reservoir sampling is a sampling technique used when you want a fixed-sized sample of a dataset with unknown size.
 
